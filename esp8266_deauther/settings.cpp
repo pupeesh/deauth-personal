@@ -1,5 +1,3 @@
-/* This software is licensed under the MIT License: https://github.com/spacehuhntech/esp8266_deauther */
-
 #include "settings.h"
 
 #include "A_config.h"     // Default Settings
@@ -90,17 +88,6 @@ namespace settings {
         JSON_FLAG(S_JSON_WEB_SPIFFS, data.web.use_spiffs);
         JSON_VALUE(S_JSON_LANG, data.web.lang);
 
-        // CLI
-        JSON_FLAG(S_JSON_SERIALINTERFACE, data.cli.enabled);
-        JSON_FLAG(S_JSON_SERIAL_ECHO, data.cli.serial_echo);
-
-        // LED
-        JSON_FLAG(S_JSON_LEDENABLED, data.led.enabled);
-
-        // Display
-        JSON_FLAG(S_JSON_DISPLAYINTERFACE, data.display.enabled);
-        JSON_INT(S_JSON_DISPLAY_TIMEOUT, data.display.timeout);
-
         str.setCharAt(str.length()-1, '}');
     }
 
@@ -177,18 +164,6 @@ namespace settings {
 //        data.cli.serial_echo = CLI_ECHO;
 
 //        data.led.enabled = USE_LED;
-/home/pupesh/.arduino15/packages/deauther/hardware/esp8266/2.7.5/tools/elf2bin.py:41: SyntaxWarning: invalid escape sequence '\s'
-  words = re.split('\s+', line)
-/home/pupesh/.arduino15/packages/deauther/hardware/esp8266/2.7.5/tools/elf2bin.py:51: SyntaxWarning: invalid escape sequence '\s'
-  words = re.split('\s+', line)
-Executable segment sizes:
-IROM   : 699776          - code in flash         (default or ICACHE_FLASH_ATTR) 
-IRAM   : 27664   / 32768 - code in IRAM          (ICACHE_RAM_ATTR, ISRs...) 
-DATA   : 1336  )         - initialized variables (global, static) in RAM/HEAP 
-RODATA : 3284  ) / 81920 - constants             (global, static) in RAM/HEAP 
-BSS    : 26416 )         - zeroed variables      (global, static) in RAM/HEAP 
-Sketch uses 732060 bytes (70%) of program storage space. Maximum is 1044464 bytes.
-Global variables use 31036 bytes (37%) of dynamic memory, leaving 50884 bytes for local variables. Maximum is 81920 bytes.
 //        data.display.enabled = USE_DISPLAY;
 //        data.display.timeout = DISPLAY_TIMEOUT;
 
@@ -267,18 +242,6 @@ Global variables use 31036 bytes (37%) of dynamic memory, leaving 50884 bytes fo
         return data.web;
     }
 
-    const cli_settings_t& getCLISettings() {
-        return data.cli;
-    }
-
-    const led_settings_t& getLEDSettings() {
-        return data.led;
-    }
-
-    const display_settings_t& getDisplaySettings() {
-        return data.display;
-    }
-
     // ===== SETTERS ===== //
 
     void setAllSettings(settings_t& newSettings) {
@@ -315,20 +278,5 @@ Global variables use 31036 bytes (37%) of dynamic memory, leaving 50884 bytes fo
     void setWebSettings(const web_settings_t& web) {
         data.web = web;
         changed  = true;
-    }
-
-    void setCLISettings(const cli_settings_t& cli) {
-        data.cli = cli;
-        changed  = true;
-    }
-
-    void setLEDSettings(const led_settings_t& led) {
-        data.led = led;
-        changed  = true;
-    }
-
-    void setDisplaySettings(const display_settings_t& display) {
-        data.display = display;
-        changed      = true;
     }
 }

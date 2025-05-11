@@ -26,7 +26,7 @@ if args.repopath != None:
 else:
     p = Path.cwd()
     parent = p.parent.parent
-#license_file_path = str(os.path.join(str(parent), "LICENSE"))
+license_file_path = str(os.path.join(str(parent), "LICENSE"))
 q = PurePath('esp8266_deauther')
 arduino_file_path = str(os.path.join(str(parent / q), "webfiles.h"))
 datadir = parent / q
@@ -186,7 +186,7 @@ for file in lang_files:
     else:
         load_lang += '    if(String(settings::getWebSettings().lang) == "'+lang_name+'") sendProgmem(' + array_name + ', sizeof(' + array_name + '), W_JSON);\n'
 
-'''base_file = os.path.basename(license_file_path)
+base_file = os.path.basename(license_file_path)
 new_file = str(os.path.join(str(compressed), str("LICENSE")))
 print("[+] Compressing " + base_file + "...")
 f_in = open(license_file_path, encoding='UTF-8')
@@ -206,7 +206,7 @@ for char in hex_content:
     hex_formatted_content += "0x" + char + ", "
 hex_formatted_content = hex_formatted_content[:-2]
 progmem_definitions += "const char " + array_name + "[] PROGMEM = {" + hex_formatted_content + "};\n"
-copy_files_function += '    if(!LittleFS.exists("/web/' + base_file + '.gz") || force) progmemToSpiffs(' + array_name + ', sizeof(' + array_name + '), "/web/' + base_file + '.gz");\n'''
+copy_files_function += '    if(!LittleFS.exists("/web/' + base_file + '.gz") || force) progmemToSpiffs(' + array_name + ', sizeof(' + array_name + '), "/web/' + base_file + '.gz");\n'
 
 print("[+] Saving everything into webfiles.h...")
 f = open(arduino_file_path, 'w')

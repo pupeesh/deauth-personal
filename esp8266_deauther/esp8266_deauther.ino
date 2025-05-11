@@ -17,11 +17,7 @@ extern "C" {
 #include "SSIDs.h"
 #include "Scan.h"
 #include "Attack.h"
-//#include "CLI.h"
-//#include "DisplayUI.h"
 #include "A_config.h"
-
-//#include "led.h"
 
 // Run-Time Variables //
 Names names;
@@ -30,10 +26,6 @@ Accesspoints accesspoints;
 Stations     stations;
 Scan   scan;
 Attack attack;
-/*CLI    cli;
-DisplayUI displayUI;
-
-simplebutton::Button* resetButton;*/
 
 #include "wifi.h"
 
@@ -100,53 +92,25 @@ void setup() {
         scan.sniffer(buf, len);
     });
 
-    // start display
-/*    if (settings::getDisplaySettings().enabled) {
-        displayUI.setup();
-        displayUI.mode = DISPLAY_MODE::INTRO;
-    }*/
-
     // load everything else
     names.load();
     ssids.load();
-//    cli.load();
 
     // create scan.json
     scan.setup();
-
-    // dis/enable serial command interface
-/*    if (settings::getCLISettings().enabled) {
-        cli.enable();
-    } else {
-        prntln(SETUP_SERIAL_WARNING);
-        Serial.flush();
-        Serial.end();
-    } */
 
     // start access point/web interface
     if (settings::getWebSettings().enabled) wifi::startAP();
 
     // STARTED
     prntln(SETUP_STARTED);
-
-    // version
-    prntln(DEAUTHER_VERSION);
-
-    // setup LED
-//    led::setup();
-
-    // setup reset button
-//    resetButton = new ButtonPullup(RESET_BUTTON);
 }
 
 void loop() {
     currentTime = millis();
 
-//    led::update();   // update LED color
     wifi::update();  // manage access point
     attack.update(); // run attacks
-//    displayUI.update();
-//    cli.update();    // read and run serial input
     scan.update();   // run scan
     ssids.update();  // run random mode, if enabled
 
@@ -162,24 +126,5 @@ void loop() {
     if (!booted) {
         booted = true;
         EEPROMHelper::resetBootNum(BOOT_COUNTER_ADDR);
-/*#ifdef HIGHLIGHT_LED
-        displayUI.setupLED();
-#endif // ifdef HIGHLIGHT_LED */
     }
-
-/*    resetButton->update();
-    if (resetButton->holding(5000)) {
-        led::setMode(LED_MODE::SCAN);
-        DISPLAY_MODE _mode = displayUI.mode;
-        displayUI.mode = DISPLAY_MODE::RESETTING;
-        displayUI.update(true);
-
-        settings::reset();
-        settings::save(true);
-
-        delay(2000);
-
-        led::setMode(LED_MODE::IDLE);
-        displayUI.mode = _mode;
-    } */
 }
